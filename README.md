@@ -33,17 +33,23 @@ sudo apt update
 
 ### Install Firewalld using the package manager:
 
-``` sudo apt install firewalld ```
+``` 
+sudo apt install firewalld
+ ```
 
 ## Step 2: Start and Enable Firewalld
 
 ### Start the Firewalld service:
 
-``` sudo systemctl start firewalld```
+``` 
+sudo systemctl start firewalld
+```
 
 ### Enable Firewalld to start on boot:
 
-``` sudo systemctl enable firewalld ```
+``` 
+sudo systemctl enable firewalld
+ ```
 
 ## Step 3: Understanding Firewalld Zones
 
@@ -53,56 +59,88 @@ Firewalld uses zones to group interfaces and services with specific trust levels
 
 ### List available zones to check if the default zones are present:
 
-``` sudo firewall-cmd --get-zones ```
+```
+sudo firewall-cmd --get-zones
+```
 
 ### If the default zones are not available, create them:
 
-```sudo firewall-cmd --permanent --new-zone=trusted```
-```sudo firewall-cmd --permanent --new-zone=internal```
-```sudo firewall-cmd --permanent --new-zone=public```
+```
+sudo firewall-cmd --permanent --new-zone=trusted
+```
+```
+sudo firewall-cmd --permanent --new-zone=internal
+```
+```
+sudo firewall-cmd --permanent --new-zone=public
+```
 
 ### Assign interfaces to each zone. 
 
-```sudo firewall-cmd --permanent --zone=trusted --add-interface=eth1```
-```sudo firewall-cmd --permanent --zone=internal --add-interface=eth2```
-```sudo firewall-cmd --permanent --zone=public --add-interface=eth0```
+```
+sudo firewall-cmd --permanent --zone=trusted --add-interface=eth1
+```
+```
+sudo firewall-cmd --permanent --zone=internal --add-interface=eth2
+```
+```
+sudo firewall-cmd --permanent --zone=public --add-interface=eth0
+```
 
 ### Set the trust level for each zone. For example, set the trusted zone to the highest trust level:
 
 
-```sudo firewall-cmd --permanent --zone=trusted --set-target=ACCEPT```
-```sudo firewall-cmd --permanent --zone=internal --set-target=DROP```
-```sudo firewall-cmd --permanent --zone=public --set-target=DROP```
+```
+sudo firewall-cmd --permanent --zone=trusted --set-target=ACCEPT
+```
+```
+sudo firewall-cmd --permanent --zone=internal --set-target=DROP
+```
+```
+sudo firewall-cmd --permanent --zone=public --set-target=DROP
+```
 
 ### In this configuration, the trusted zone allows all traffic, the internal zone only allows traffic from the trusted zone, and the public zone only allows traffic related to established connections (outgoing traffic).
 
 ### Reload Firewalld to apply the changes:
 
-```sudo firewall-cmd --reload```
+```
+sudo firewall-cmd --reload
+```
 
 ## Step 5: Configure Services
 
 ### Check available services:
 
-```sudo firewall-cmd --get-services```
+```
+sudo firewall-cmd --get-services
+```
 
 ### Add services to the trusted and internal zones as needed. For example, to allow SSH access only from the trusted zone:
 
-```sudo firewall-cmd --permanent --zone=trusted --add-service=ssh```
+```
+sudo firewall-cmd --permanent --zone=trusted --add-service=ssh
+```
 
 ### Reload Firewalld to apply the service changes:
 
-```sudo firewall-cmd --reload```
+```
+sudo firewall-cmd --reload
+```
 
 ## Step 6: Verify Configuration
 
 ### Check the active zones and their interfaces:
 
-```sudo firewall-cmd --get-active-zones```
+```
+sudo firewall-cmd --get-active-zones
+```
 
 ### Verify the rules in each zone:
 
-```sudo firewall-cmd --list-all-zones```
+```
+sudo firewall-cmd --list-all-zones
+```
 
 Test the firewall rules to ensure they are working as intended.
 
